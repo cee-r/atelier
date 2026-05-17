@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Defying Gravity</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/627d3e354c.js" crossorigin="anonymous"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+        body {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        h1,
+        h2 {
+            text-transform: uppercase;
+        }
+
+        .text {
+            font-family: "Barlow Condensed", sans-serif;
+            font-weight: 800;
+            font-style: normal;
+            /* Text Gradient CSS */
+            color: #FF739A;
+            background-image: linear-gradient(45deg, #FF739A 39%, #29BA57 72%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+
+        .image {
+            display: block;
+            width: 100%;
+            height: 300px;
+            background-color: beige;
+        }
+
+        section {
+            /* margin: 4rem 0; */
+            position: relative;
+            width: 100vw;
+            height: 100svh;
+            max-width: 100%;
+            background-color: 161616;
+            overflow: hidden;
+        }
+
+
+        .header {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 75%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spotlight {
+            background-color: #101010;
+        }
+
+
+        .mask-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100svh;
+            -webkit-mask: url(witchhat.svg) center/contain no-repeat;
+            mask: url(witchhat.svg) center/contain no-repeat;
+            -webkit-mask-size: 0%;
+            mask-size: 0;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .mask-container .text {
+            filter: drop-shadow(0px 4px 12px #000000);
+        }
+
+        .mask-container .mask-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mask-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .anchor {
+            color:#fff;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            z-index: 67;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            display: block;
+            width: 25%;
+        }
+
+        .anchor:hover {
+            opacity: 0.8;
+        }
+
+        .anchor i {
+            margin: 1rem 0;
+            font-size: 2rem;
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body>
+    <section class="intro">
+        <div class="header">
+            <span class="text display-1">
+                It's time to try defying gravity
+            </span>
+        </div>
+    </section>
+
+    <section class="spotlight">
+        <div class="header bounce">
+            <span class=" text display-2 ">
+                I think I'll try
+            </span>
+        </div>
+        <div class="mask-container">
+            <div class="mask-img">
+                <img src="wicked.jpg" alt=" Wicked">
+            </div>
+
+            <div class="header">
+                <span class="text display-2  text-uppercase">Defying Gravity</span>
+
+
+                <a class="anchor my-5" href="#outro">
+                    (But scroll down) <br>
+                    <i class="fa-solid fa-angles-down fa-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="outro" class="outro">
+        <div class="header">
+            <span class=" text display-2">
+                And you can't pull me down
+            </span>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/SplitText.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger, SplitText);
+            const lenis = new Lenis();
+
+            // Smooth scrolling synced with gsap
+            lenis.on("scroll", ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+
+  
+            const spotlight = document.querySelector(".spotlight");
+            const anchor = document.querySelector(".anchor");
+            const maskContainer = document.querySelector(".mask-container");
+            const maskImage = document.querySelector(".mask-img");
+            const maskHeader = document.querySelector(".mask-container .header span");
+
+ 
+            const viewportHeight = window.innerHeight;
+            let scrollDistance = viewportHeight * 3;
+
+            window.addEventListener('resize', () => {
+                viewportHeight = window.innerHeight;
+                ScrollTrigger.refresh();
+            });
+
+
+            //
+            ScrollTrigger.create({
+                trigger: ".spotlight", // Section
+                start: "top top", // When top of element hits top of the viewport
+                end: `+=${scrollDistance}px`, // Scroll distance, multiply viewport for space
+                pin: true, // Pin section in place for reveal effect
+                pinSpacing: true, // So layout doesn't jump or collapse
+                scrub: 1, // follow scroll position
+                onUpdate: (self) => {
+                
+                    const progress = self.progress / .9; // Ratio of animation to full image, Delay
+
+
+                    if (maskContainer && maskImage) {
+
+                        // Mask sizing based on progress
+
+                        // Match
+                        if (progress > 0.25 && progress < 0.75) {
+                            const maskProgress = (progress - 0.25) / 0.5;
+                            const maskSize = `${maskProgress * 600}%`;
+                            const imageScale = 1.5 - maskProgress * 0.5;
+
+                            maskContainer.style.setProperty("-web-mask-size", maskSize);
+                            maskContainer.style.setProperty("mask-size", maskSize);
+
+
+                            gsap.set(maskImage, {
+                                scale: imageScale,
+                            })
+                        } else if (progress < 0.25) {
+
+                            // Hiidden
+                            maskContainer.style.setProperty("-web-mask-size", "0%");
+                            maskContainer.style.setProperty("mask-size", "0%");
+
+                            gsap.set(maskImage, {
+                                scale: 1.5,
+                            })
+
+                        } else if (progress > 0.75) {
+
+                            // Reveal
+                            maskContainer.style.setProperty("-web-mask-size", "600%");
+                            maskContainer.style.setProperty("mask-size", "600%");
+
+                            anchor.style.setProperty("opacity", "1");
+                            gsap.set(maskImage, {
+                                scale: 1,
+                            })
+                        }
+                    }
+
+                }
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>
